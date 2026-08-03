@@ -13,7 +13,9 @@ class User(Base):
     password: Mapped[str] = mapped_column(String(255))
 
     teams: Mapped[list["Team"]] = relationship(secondary="user_team", back_populates="users")
-    favourites: Mapped[list["Favourite"]] =relationship(back_populates="user_likes", secondary="like_user")
+    favourites: Mapped[list["Favourite"]] = relationship(
+        back_populates="user_likes", secondary="like_user"
+    )
 
     def __repr__(self) -> str:
         return f"<User id={self.id} login={self.login}>"

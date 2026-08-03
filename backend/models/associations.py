@@ -36,4 +36,3 @@ like_user_association = Table(
     Column("users_id", ForeignKey("user.id"), primary_key=True),
     Column("favourites_id", ForeignKey("favourite.id"), primary_key=True),
 )
-
