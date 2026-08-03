@@ -6,6 +6,71 @@ readme = "README.md"
 requires-python = ">=3.14"
 dependencies = [
     "fastapi>=0.141.1",
+    "pre-commit>=4.6.1",
     "pydantic>=2.13.4",
+    "sqlalchemy>=2.0.51",
     "uvicorn>=0.52.1",
 ]
+
+
+
+[tool.ruff]
+line-length = 100
+target-version = "py314"
+src = ["backend"]
+exclude = [
+    ".venv",
+    "venv",
+    "migrations",
+    "__pycache__",
+    ".git",
+]
+
+[tool.ruff.lint]
+select = [
+    "E",      # pycodestyle errors
+    "W",      # pycodestyle warnings
+    "F",      # pyflakes
+    "I",      # isort (сортировка импортов)
+    "N",      # pep8-naming
+    "UP",     # pyupgrade (современный синтаксис)
+    "B",      # flake8-bugbear (частые баги)
+    "C4",     # flake8-comprehensions
+    "SIM",    # flake8-simplify
+    "RUF",    # ruff-специфичные правила
+    "ASYNC",  # flake8-async (для async/await кода)
+    "S",      # flake8-bandit (базовая безопасность)
+    "A",      # flake8-builtins (затенение встроенных имён)
+    "T20",    # flake8-print (запрет print в проде)
+]
+ignore = [
+    "E501",
+    "S101", 
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S101", "S105", "S106", "T20"]
+"**/__init__.py" = ["F401"]  
+"models/*" = ["F821"]
+
+[tool.ruff.lint.flake8-import-conventions]
+banned-from = [
+    "sqlalchemy.orm.session",
+    "sqlalchemy.orm.query",
+]
+
+[tool.ruff.lint.flake8-tidy-imports]
+ban-relative-imports = "parents"
+
+[tool.ruff.lint.isort]
+known-first-party = ["backend"]
+combine-as-imports = true
+
+[tool.ruff.lint.pep8-naming]
+classmethod-decorators = ["classmethod", "sqlalchemy.orm.declared_attr"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"

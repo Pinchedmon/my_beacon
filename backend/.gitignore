@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+
+# Virtual environments
+.venv/
+venv/
+
+# Environment variables
+.env
+
+# IDEs
+.vscode/
+.idea/
+
+# Logs and databases
+*.log
+*.db
+
+# Cache
+.pytest_cache/
+.ruff_cache/
+
+# Pytest
+.pytest_cache/
+.coverage
+htmlcov/
+
