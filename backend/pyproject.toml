@@ -8,6 +8,7 @@ dependencies = [
     "fastapi>=0.141.1",
     "pre-commit>=4.6.1",
     "pydantic>=2.13.4",
+    "ruff>=0.16.1",
     "sqlalchemy>=2.0.51",
     "uvicorn>=0.52.1",
 ]
@@ -51,7 +52,7 @@ ignore = [
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "S105", "S106", "T20"]
 "**/__init__.py" = ["F401"]  
-"models/*" = ["F821"]
+"models/*" = ["F821", "UP037"]
 
 [tool.ruff.lint.flake8-import-conventions]
 banned-from = [
