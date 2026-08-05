@@ -1,7 +1,6 @@
+from db.db import Base
 from sqlalchemy import String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from backend.db.db import Base
 
 
 class Team(Base):

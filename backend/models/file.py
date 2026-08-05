@@ -1,7 +1,6 @@
+from db.db import Base
 from sqlalchemy import ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-
-from backend.db.db import Base
 
 
 class File(Base):

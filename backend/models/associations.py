@@ -1,6 +1,5 @@
+from db.db import Base
 from sqlalchemy import Column, ForeignKey, Table
-
-from backend.db.db import Base
 
 user_team_association = Table(
     "user_team",
