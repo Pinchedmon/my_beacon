@@ -1,10 +1,14 @@
 from datetime import datetime
+from typing import TYPE_CHECKING
 
-from db.db import Base
+from db.base import Base
 from sqlalchemy import ForeignKey, String, func
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
+if TYPE_CHECKING:
+    from db.models.tag import Tag
+    from db.models.team import Team
 
 class Route(Base):
     __tablename__ = "route"
@@ -15,10 +19,10 @@ class Route(Base):
     updated_at: Mapped[datetime] = mapped_column(server_default=func.now(), onupdate=func.now())
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
 
-    team_id: Mapped[int] = mapped_column(ForeignKey("team.id"))
+    team_id: Mapped[int] = mapped_column(ForeignKey("team.id", ondelete="CASCADE"), index=True)
 
-    team: Mapped["Team"] = relationship(back_populates="routes")
-    tags: Mapped[list["Tag"]] = relationship(back_populates="routes", secondary="tag_route")
+    team: Mapped[Team] = relationship(back_populates="routes")
+    tags: Mapped[list[Tag]] = relationship(back_populates="routes", secondary="tag_route")
 
     def __repr__(self) -> str:
         return f"<Route id={self.id} name={self.name} created_at={self.created_at}>"

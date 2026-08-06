@@ -1,19 +1,10 @@
-import sys
 from logging.config import fileConfig
-from pathlib import Path
 
+import db.models  # noqa: F401
 from alembic import context
-from sqlalchemy import engine_from_config, pool
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(BASE_DIR))
-
-import models  # noqa: F401
 from core.config import Config
-from db.db import Base
-
-target_metadata = Base.metadata
-
+from db.base import Base
+from sqlalchemy import engine_from_config, pool
 
 config = context.config
 

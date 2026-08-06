@@ -4,10 +4,15 @@ app = FastAPI()
 
 
 @app.get("/")
-async def root():
+def root():
     return {"message": "Hello World"}
 
 
 @app.get("/health")
-async def health():
+def health():
     return {"status": "healthy"}
+
+@app.get("/health_db")
+def check_connection_db():
+    return ""
+
