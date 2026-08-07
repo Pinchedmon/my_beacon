@@ -8,7 +8,9 @@ from sqlalchemy import engine_from_config, pool
 
 config = context.config
 
-config.set_main_option("sqlalchemy.url", Config.ALEMBIC_URL)
+# URL может быть задан заранее — так тесты прогоняют миграции на своей БД.
+if not config.get_main_option("sqlalchemy.url", None):
+    config.set_main_option("sqlalchemy.url", Config.postgres_config.alembic_connection)
 
 target_metadata = Base.metadata
 

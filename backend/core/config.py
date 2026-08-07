@@ -32,6 +32,35 @@ class AsyncPGConfig(BaseConfig):
     PG_DB: str = "postgres"
     PG_HOST: str = "localhost"
     PG_PORT: int = 5432
+    PG_DB_TEST: str = "beacon_test"
+    PG_DB_ADMIN: str = "postgres"
+
+    def _dsn(self, driver: str, database: str) -> str:
+        return (
+            f"postgresql+{driver}://{self.PG_USER}:{self.PG_PASSWORD}"
+            f"@{self.PG_HOST}:{self.PG_PORT}/{database}"
+        )
+
+    @property
+    def asyncpg_connection(self) -> str:
+        return self._dsn("asyncpg", self.PG_DB)
+
+    @property
+    def asyncpg_connection_test(self) -> str:
+        return self._dsn("asyncpg", self.PG_DB_TEST)
+
+    @property
+    def alembic_connection(self) -> str:
+        return self._dsn("psycopg2", self.PG_DB)
+
+    @property
+    def alembic_connection_test(self) -> str:
+        return self._dsn("psycopg2", self.PG_DB_TEST)
+
+    @property
+    def admin_connection(self) -> str:
+        """Синхронное подключение к служебной БД — для CREATE/DROP DATABASE."""
+        return self._dsn("psycopg2", self.PG_DB_ADMIN)
 
 
 class AuthConfig(BaseConfig):

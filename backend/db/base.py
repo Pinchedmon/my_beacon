@@ -13,7 +13,9 @@ class Base(DeclarativeBase):
         return f"<{self.__class__.__name__} {', '.join(table_columns)}>"
 
 
-async_pg_engine = create_async_engine(Config.PG_DATABASE_URL)
+# TODO: разобраться c pool_size, max_overflow, echo, pool_pre_ping
+async_pg_engine = create_async_engine(Config.postgres_config.asyncpg_connection)
+# TODO: разобраться c autoflush
 AsyncSessionLocal = async_sessionmaker(async_pg_engine, expire_on_commit=False)
 
 
