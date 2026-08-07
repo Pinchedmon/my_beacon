@@ -9,6 +9,7 @@ if TYPE_CHECKING:
     from db.models.note import Note
     from db.models.route import Route
 
+
 class Tag(Base):
     __tablename__ = "tag"
 

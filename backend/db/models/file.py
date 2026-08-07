@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from db.models.favourite import Favourite
     from db.models.note import Note
 
+
 class File(Base):
     __tablename__ = "file"
 

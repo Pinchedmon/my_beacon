@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from db.models.route import Route
     from db.models.user import User
 
+
 class Team(Base):
     __tablename__ = "team"
 
@@ -17,7 +18,9 @@ class Team(Base):
     name: Mapped[str] = mapped_column(String(100))
 
     users: Mapped[list[User]] = relationship(secondary="user_team", back_populates="teams")
-    notes: Mapped[list[Note]] = relationship(back_populates="team", cascade="all, delete-orphan", passive_deletes=True)
+    notes: Mapped[list[Note]] = relationship(
+        back_populates="team", cascade="all, delete-orphan", passive_deletes=True
+    )
     routes: Mapped[list[Route]] = relationship(
         back_populates="team", cascade="all, delete-orphan", passive_deletes=True
     )

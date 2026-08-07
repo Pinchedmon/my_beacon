@@ -11,6 +11,7 @@ if TYPE_CHECKING:
     from db.models.tag import Tag
     from db.models.team import Team
 
+
 class Note(Base):
     __tablename__ = "note"
 
@@ -23,7 +24,9 @@ class Note(Base):
     team_id: Mapped[int] = mapped_column(ForeignKey("team.id", ondelete="CASCADE"), index=True)
 
     team: Mapped[Team] = relationship(back_populates="notes")
-    files: Mapped[list[File]] = relationship(back_populates="note", cascade="all, delete-orphan", passive_deletes=True)
+    files: Mapped[list[File]] = relationship(
+        back_populates="note", cascade="all, delete-orphan", passive_deletes=True
+    )
     tags: Mapped[list[Tag]] = relationship(back_populates="notes", secondary="tag_note")
 
     def __repr__(self) -> str:

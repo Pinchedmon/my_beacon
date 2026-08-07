@@ -6,16 +6,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-
 class BaseConfig(BaseSettings):
     """
     Базовая настройка c подключением env
     """
 
     model_config = SettingsConfigDict(
-        env_file=str(BASE_DIR / ".env"),
-        env_file_encoding="utf_8",
-        extra="allow"
+        env_file=str(BASE_DIR / ".env"), env_file_encoding="utf_8", extra="allow"
     )
 
 
@@ -25,23 +22,25 @@ class AppConfig(BaseConfig):
     """
 
 
-
 class AsyncPGConfig(BaseConfig):
     """
     Настройки для БД
     """
 
-    PG_USER: str= "postgres"
+    PG_USER: str = "postgres"
     PG_PASSWORD: str = ""
-    PG_DB: str ="postgres"
+    PG_DB: str = "postgres"
     PG_HOST: str = "localhost"
-    PG_PORT:int = 5432
+    PG_PORT: int = 5432
+
 
 class AuthConfig(BaseConfig):
     """
     Настройки авторизации
     """
+
     ...
+
 
 class LoggConfig(BaseConfig):
     """
@@ -53,7 +52,7 @@ class LoggConfig(BaseConfig):
     @property
     def logging_config(self):
         return {
-            "version:":1,
+            "version:": 1,
             "disable_existing_loggers": False,
             "formatters": {
                 "default": {
@@ -82,9 +81,10 @@ class LoggConfig(BaseConfig):
             },
         }
 
-    #TODO: добавить туда где запускать будем, Лёш не забудь
+    # TODO: добавить туда где запускать будем, Лёш не забудь
     def setup_logging(self):
         dictConfig(self.logging_config)
+
 
 class Config:
     log_config: LoggConfig = LoggConfig()
@@ -92,6 +92,5 @@ class Config:
     postgres_config: AsyncPGConfig = AsyncPGConfig()
     auth_config: AuthConfig = AuthConfig()
 
+
 config = Config()
-
-

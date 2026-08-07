@@ -8,6 +8,7 @@ if TYPE_CHECKING:
     from db.models.favourite import Favourite
     from db.models.team import Team
 
+
 class User(Base):
     __tablename__ = "user"
 

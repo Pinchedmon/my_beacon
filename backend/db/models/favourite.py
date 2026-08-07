@@ -12,6 +12,7 @@ if TYPE_CHECKING:
     from db.models.team import Team
     from db.models.user import User
 
+
 class Favourite(Base):
     __tablename__ = "favourite"
 

@@ -4,12 +4,12 @@ from sqlalchemy.orm import DeclarativeBase
 
 
 class Base(DeclarativeBase):
-    """ Базовый класс таблицы БД."""
+    """Базовый класс таблицы БД."""
 
     def __repr__(self):
-        table_columns =[]
+        table_columns = []
         for column in self.__table__.columns.keys():  # noqa: SIM118
-            table_columns.append(f"{column}={getattr(self,column)}")
+            table_columns.append(f"{column}={getattr(self, column)}")
         return f"<{self.__class__.__name__} {', '.join(table_columns)}>"
 
 

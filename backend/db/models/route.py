@@ -10,6 +10,7 @@ if TYPE_CHECKING:
     from db.models.tag import Tag
     from db.models.team import Team
 
+
 class Route(Base):
     __tablename__ = "route"
 
