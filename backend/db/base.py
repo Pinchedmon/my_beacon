@@ -13,7 +13,7 @@ class Base(DeclarativeBase):
         return f"<{self.__class__.__name__} {', '.join(table_columns)}>"
 
 
-async_pg_engine = create_async_engine(Config.PG_DATABASE_URL, echo=True)
+async_pg_engine = create_async_engine(Config.PG_DATABASE_URL)
 AsyncSessionLocal = async_sessionmaker(async_pg_engine, expire_on_commit=False)
 
 
