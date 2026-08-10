@@ -6,10 +6,7 @@ from pathlib import Path
 import pytest
 from alembic import command
 from alembic.config import Config as AlembicConfig
-from core.config import config
-from db.base import get_session
 from httpx2 import ASGITransport, AsyncClient
-from main import app
 from sqlalchemy import create_engine, text
 from sqlalchemy.ext.asyncio import (
     AsyncConnection,
@@ -18,6 +15,13 @@ from sqlalchemy.ext.asyncio import (
     async_sessionmaker,
     create_async_engine,
 )
+
+from core.config import config
+from db.base import get_session
+from db.models import User
+from main import app
+from repositories.user import UserRepository
+from schemas.user import UserCreateSchema
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -78,7 +82,7 @@ async def connection(engine: AsyncEngine) -> AsyncIterator[AsyncConnection]:
 @pytest.fixture
 async def db_session(connection: AsyncConnection) -> AsyncIterator[AsyncSession]:
     # create_savepoint — чтобы session.commit() внутри тестируемого кода
-    # закрывал SAVEPOINT, а не внешнюю транзакцию.  # noqa: RUF003
+    # закрывал SAVEPOINT, а не внешнюю транзакцию.
     session_factory = async_sessionmaker(
         bind=connection,
         expire_on_commit=False,
@@ -86,6 +90,21 @@ async def db_session(connection: AsyncConnection) -> AsyncIterator[AsyncSession]
     )
     async with session_factory() as session:
         yield session
+
+
+@pytest.fixture(scope="function")
+async def created_user(db_session: AsyncSession) -> User:
+    """Создаёт пользователя, чтобы использовать его в тестах"""
+    test_data_user = UserCreateSchema(name="testovich", login="tectovich", password="12341234")
+    # test_data_team = Team(
+    #     name="teamovich",
+    # )
+    user_repository = UserRepository(db_session)
+    user = await user_repository.create(test_data_user)
+    # user.teams.append(test_data_team)
+    await db_session.commit()
+    await db_session.refresh(user)
+    return user
 
 
 @pytest.fixture

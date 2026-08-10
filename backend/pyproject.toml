@@ -11,6 +11,7 @@ dependencies = [
     "bcrypt>=5.0.0",
     "dotenv>=0.9.9",
     "fastapi>=0.141.1",
+    "httpx2>=2.9.1",
     "psycopg2-binary>=2.9.12",
     "pydantic>=2.13.4",
     "pydantic-settings>=2.15.0",
@@ -23,7 +24,7 @@ dependencies = [
 [tool.ruff]
 line-length = 100
 target-version = "py314"
-src = ["backend"]
+src = ["."]
 exclude = [
     ".venv",
     "venv",
@@ -50,9 +51,14 @@ select = [
     "T20",    # flake8-print (запрет print в проде)
 ]
 ignore = [
+    "RUF002",
     "E501",
-    "S101", 
-    "E402"
+    "S101",
+    "E402",
+    # Кириллица в строках/докстрингах/комментариях — проект русскоязычный
+    "RUF001",
+    "RUF002",
+    "RUF003",
 ]
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["S101", "S105", "S106", "T20"]
@@ -69,7 +75,16 @@ banned-from = [
 ban-relative-imports = "parents"
 
 [tool.ruff.lint.isort]
-known-first-party = ["backend"]
+known-first-party = [
+    "api",
+    "core",
+    "db",
+    "exceptions",
+    "repositories",
+    "schemas",
+    "services",
+    "tests",
+]
 combine-as-imports = true
 
 [tool.ruff.lint.pep8-naming]

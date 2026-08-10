@@ -11,7 +11,7 @@ from schemas.user import UserCreateSchema
 logger = getLogger(__name__)
 
 
-class UserRepository:
+class TeamRepository:
     def __init__(self, db: AsyncSession):
         self.db = db
 
