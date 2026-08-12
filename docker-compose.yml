@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${PG_PASSWORD:-postgres}
       POSTGRES_DB: ${PG_DB:-postgres}
     env_file:
-      - ./.env
+      - ./backend/.env
     ports:
       - "${PG_PORT:-5433}:5432"
     volumes:
@@ -36,7 +36,7 @@ services:
       MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD:-minioadmin}
     command: server /data --console-address ":9001"
     env_file:
-      - ./.env
+      - ./backend/.env
     ports:
       - "${MINIO_PORT:-9000}:9000"
       - "9001:9001"   
@@ -58,7 +58,7 @@ services:
     container_name: backend
     restart: unless-stopped
     env_file:
-      - ./.env
+      - ./backend/.env
     environment:
       PG_HOST: postgres
       PG_PORT: 5432

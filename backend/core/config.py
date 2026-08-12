@@ -21,6 +21,20 @@ class AppConfig(BaseConfig):
     Настройки для приложения
     """
 
+    PORT: int = 8000
+
+
+class AsyncMinioConfig(BaseConfig):
+    """
+    Настройки для minio
+    """
+
+    MINIO_USER: str = "admin"
+    MINIO_PASSWORD: str = ""
+    MINIO_PORT: int = 9000
+    MINIO_HOST: str = "localhost"
+    MINIO_BUCKET: str = "beacon"
+
 
 class AsyncPGConfig(BaseConfig):
     """
@@ -119,6 +133,7 @@ class Config:
     log_config: LoggConfig = LoggConfig()
     app_config: AppConfig = AppConfig()
     postgres_config: AsyncPGConfig = AsyncPGConfig()
+    minio_config: AsyncMinioConfig = AsyncMinioConfig()
     auth_config: AuthConfig = AuthConfig()
 
 
