@@ -19,7 +19,7 @@ class BaseRepository[ModelT: Base]:
     def __init__(self, db: AsyncSession):
         self.db = db
 
-    async def create(self, data: dict[str, Any]) -> ModelT:
+    async def create(self, **data) -> ModelT:
         obj = self.model(**data)
         self.db.add(obj)
         # flush отправляет INSERT и заполняет id, но транзакцию не закрывает.
@@ -50,9 +50,6 @@ class BaseRepository[ModelT: Base]:
         await self.db.flush()
         return obj
 
-    async def delete(self, obj_id: int) -> bool:
+    async def delete(self, obj_id: int) -> None:
         stmt = delete(self.model).where(self.model.id == obj_id)
-        result = await self.db.execute(stmt)
-        # rowcount отвечает на вопрос "а было ли что удалять" —
-        # роутер по нему отдаёт 404 вместо вранья про успех.
-        return result.rowcount > 0
+        await self.db.execute(stmt)

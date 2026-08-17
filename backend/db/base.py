@@ -1,11 +1,13 @@
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
-from sqlalchemy.orm import DeclarativeBase
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 
 from core.config import Config
 
 
 class Base(DeclarativeBase):
     """Базовый класс таблицы БД."""
+
+    id: Mapped[int] = mapped_column(primary_key=True)
 
     def __repr__(self):
         table_columns = []

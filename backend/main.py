@@ -75,6 +75,11 @@ async def root():
     return RedirectResponse(url="/docs")
 
 
+@app.get("/health")
+async def check_health():
+    return True
+
+
 def start():
     """Запуск FastAPI сервера"""
     port = int(Config.app_config.PORT)

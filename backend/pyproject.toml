@@ -21,6 +21,30 @@ dependencies = [
 ]
 
 
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+pythonVersion = "3.14"
+typeCheckingMode = "standard"
+# backend/ = sources root: импорты вида `core.config`, не `backend.core.config`
+extraPaths = ["."]
+include = ["."]
+exclude = [
+    ".venv",
+    "**/__pycache__",
+    "**/.ruff_cache",
+    "**/.pytest_cache",
+    "db/migrations",
+]
+reportMissingTypeStubs = false
+reportPrivateImportUsage = "warning"
+reportUnusedImport = "none"
+reportUnusedVariable = "none"
+reportUnknownMemberType = "none"
+reportUnknownVariableType = "none"
+reportImplicitOverride = "none"
+reportOptionalMemberAccess = "warning"
+
 
 [tool.ruff]
 line-length = 100

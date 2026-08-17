@@ -6,7 +6,7 @@ from schemas.user import UserCreateSchema
 async def test_create_user_persists_and_is_readable(db_session):
     test_data = UserCreateSchema(name="name", login="login", password="password")
     user_repository = UserRepository(db_session)
-    user = await user_repository.create(test_data)
+    user = await user_repository.create(**test_data.model_dump())
     await db_session.commit()
     await db_session.refresh(user)
     response = await user_repository.get_by_id(user.id)

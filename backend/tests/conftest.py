@@ -100,7 +100,7 @@ async def created_user(db_session: AsyncSession) -> User:
     #     name="teamovich",
     # )
     user_repository = UserRepository(db_session)
-    user = await user_repository.create(test_data_user)
+    user = await user_repository.create(**test_data_user.model_dump())
     # user.teams.append(test_data_team)
     await db_session.commit()
     await db_session.refresh(user)
